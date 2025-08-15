@@ -1,13 +1,21 @@
 {
   "name": "flex-reviews",
   "private": true,
-  "workspaces": ["backend", "frontend"],
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
   "scripts": {
     "dev": "concurrently -n BACKEND,FRONTEND -c blue,magenta \"npm run dev -w backend\" \"npm run dev -w frontend\"",
     "lint": "npm run lint -w backend && npm run lint -w frontend",
     "typecheck": "npm run typecheck -w backend && npm run typecheck -w frontend"
   },
   "devDependencies": {
-    "concurrently": "^9.2.0"
+    "@vitest/coverage-v8": "^3.2.4",
+    "concurrently": "^9.2.0",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "zod": "^4.0.17"
   }
 }

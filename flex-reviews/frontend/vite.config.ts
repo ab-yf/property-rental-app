@@ -8,6 +8,7 @@ import react from "@vitejs/plugin-react";
  *   This means fetch('/api/health') in the browser hits the Express server
  *   without CORS headaches.
  */
+
 export default defineConfig({
     plugins: [react()],
     server: {
