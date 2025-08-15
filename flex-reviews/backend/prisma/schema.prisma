@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+/**
+ * We store the *canonical* normalized review so the app can render from DB.
+ * All fields mirror the ReviewSchema from Step 2.
+ * You can safely add indexes (e.g., on listingId, submittedAt) later.
+ */
+model Review {
+  id              String   @id            // "hostaway:7453"
+  source          String   // 'hostaway' | 'google'
+  listingId       String
+  listingName     String?
+  type            String   // 'guest_to_host' | 'host_to_guest'
+  channel         String   // 'airbnb' | 'booking' | 'vrbo' | 'direct' | 'unknown'
+  status          String?  // optional lifecycle
+  rating          Float?
+  categories      Json
+  text            String?
+  privateFeedback String?
+  submittedAt     DateTime
+  authorName      String?
+  authorUrl       String?
+  approved        Boolean  @default(false)
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

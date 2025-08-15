@@ -26,6 +26,7 @@
 
     // Module interop
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
 
     // Per-file isolation & modern module detection

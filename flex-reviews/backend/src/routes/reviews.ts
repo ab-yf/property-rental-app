@@ -1,4 +1,5 @@
 import { Router, Request, Response } from "express";
+import { prisma } from "../db/prisma";
 import { z } from "zod";
 import fs from "fs/promises";
 import path from "path";
@@ -69,6 +70,22 @@ router.get("/hostaway", async (req: Request, res: Response) => {
     // 3) Normalize
     const normalized = normalizeManyHostaway(rawItems);
 
+    // --- Merge DB-approved state, if present ---
+// Fetch approvals for the normalized review ids from the DB.
+    const ids = normalized.map((r) => r.id);
+    const approvals = await prisma.review.findMany({
+        where: { id: { in: ids } },
+        select: { id: true, approved: true }
+    });
+    const approvalMap = new Map(approvals.map((a) => [a.id, a.approved]));
+
+// Apply 'approved' from DB to each normalized item (default false)
+    for (const r of normalized) {
+        const a = approvalMap.get(r.id);
+        (r as any).approved = a ?? false;
+    }
+
+
     // 4) Apply filters (server-side)
     const fromTs = parseDate(q.from ?? undefined);
     const toTs = parseDate(q.to ?? undefined);
@@ -106,6 +123,33 @@ router.get("/hostaway", async (req: Request, res: Response) => {
         },
         reviews: page
     });
+});
+
+/**
+ * PATCH /api/reviews/:id/approve
+ * Request body: { approved: boolean }
+ * Response: the updated review row (or 404 if not found)
+ */
+router.patch("/:id/approve", async (req: Request, res: Response) => {
+    const id = String(req.params.id);
+    const approved = typeof req.body?.approved === "boolean" ? req.body.approved : null;
+    if (approved == null) {
+        return res.status(400).json({ error: "approved (boolean) is required" });
+    }
+
+    try {
+        const updated = await prisma.review.update({
+            where: { id },
+            data: { approved }
+        });
+        return res.json(updated);
+    } catch (e: any) {
+        // Record may not exist yet (e.g., if seed wasn't run).
+        if (e?.code === "P2025") {
+            return res.status(404).json({ error: `Review ${id} not found` });
+        }
+        throw e;
+    }
 });
 
 export default router;
