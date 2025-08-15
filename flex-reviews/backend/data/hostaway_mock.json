@@ -1,0 +1,40 @@
+{
+  "result": [
+    {
+      "id": 7453,
+      "listingMapId": 70985,
+      "listingName": "2B N1 A - 29 Shoreditch Heights",
+      "type": "host-to-guest",
+      "channelId": 1,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Shane and family are wonderful! Would definitely host again :)",
+      "privateFeedback": null,
+      "submittedAt": "2020-08-21 22:45:14",
+      "guestName": "Shane Finkelstein",
+      "reservationId": 555
+    },
+    {
+      "id": 9001,
+      "listingMapId": 70986,
+      "listingName": "Modern Loft — City Center",
+      "type": "guest-to-host",
+      "channelId": 2,
+      "status": "awaiting",
+      "rating": 4.5,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "check_in", "rating": 8 }
+      ],
+      "publicReview": "Great location, check-in was smooth.",
+      "privateFeedback": "WiFi password note could be clearer.",
+      "submittedAt": "2021-05-02 10:15:00",
+      "guestName": "Alex J"
+    }
+  ]
+}
