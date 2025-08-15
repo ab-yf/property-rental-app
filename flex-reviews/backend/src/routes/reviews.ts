@@ -1,20 +1,23 @@
 import { Router, Request, Response } from "express";
-import { prisma } from "../db/prisma";
 import { z } from "zod";
 import fs from "fs/promises";
 import path from "path";
 import { normalizeManyHostaway } from "../services/hostaway/normalize";
+import { prisma } from "../db/prisma";
 
 // -------------- Query schema & types --------------
+// New: id (exact review id) and q (free-text search)
 const QuerySchema = z.object({
-    listingId: z.string().optional(),     // exact match
+    id: z.string().optional(),             // NEW: exact review id (e.g., "hostaway:7453")
+    listingId: z.string().optional(),      // exact listing id (e.g., "70985")
     type: z.enum(["guest_to_host", "host_to_guest"]).optional(),
     status: z.enum(["awaiting", "published", "pending", "scheduled", "expired"]).optional(),
     channel: z.enum(["airbnb", "booking", "vrbo", "direct", "unknown"]).optional(),
     minRating: z.coerce.number().min(0).max(5).optional(),
     maxRating: z.coerce.number().min(0).max(5).optional(),
-    from: z.string().optional(),          // ISO date (we'll parse)
-    to: z.string().optional(),            // ISO date (we'll parse)
+    from: z.string().optional(),
+    to: z.string().optional(),
+    q: z.string().optional(),              // NEW: keyword search across id/listing/text/author/name
     limit: z.coerce.number().min(1).max(200).default(50),
     offset: z.coerce.number().min(0).default(0)
 });
@@ -32,66 +35,61 @@ async function loadMock(): Promise<unknown[]> {
     const p = path.join(process.cwd(), "data", "hostaway_mock.json");
     const raw = JSON.parse(await fs.readFile(p, "utf-8"));
     if (Array.isArray(raw)) return raw;
-    if (Array.isArray(raw?.result)) return raw.result;
+    if (Array.isArray((raw as any)?.result)) return (raw as any).result;
     return [];
 }
-
-// Placeholder for live Hostaway call (Step 6 if you flip USE_MOCK=false)
-// async function loadLive(filters: Record<string, string>): Promise<unknown[]> {
-//   // TODO: Implement Hostaway JWT + /v1/reviews call
-//   return [];
-// }
 
 // -------------- Route --------------
 const router = Router();
 
 /**
  * GET /api/reviews/hostaway
- *
- * Returns normalized, filterable Hostaway reviews.
- * Behavior:
- *  - If USE_MOCK=true: read local data/hostaway_mock.json
- *  - Else: (future) call Hostaway API, then normalize
- *
- * Query params:
- *  - listingId, type, status, channel
- *  - minRating, maxRating
- *  - from, to (ISO)
+ * Query supports:
+ *  - id (exact review id), listingId (exact)
+ *  - q (free-text across id, listingId, listingName, text, author name)
+ *  - type, status, channel, minRating, maxRating, from, to
  *  - limit, offset
  */
 router.get("/hostaway", async (req: Request, res: Response) => {
-    // 1) Validate query
     const q = QuerySchema.parse(req.query);
 
-    // 2) Load data (mock vs live)
     const useMock = String(process.env.USE_MOCK ?? "true").toLowerCase() !== "false";
-    const rawItems = useMock ? await loadMock() : []; // await loadLive(mappedFilters)
-
-    // 3) Normalize
+    const rawItems = useMock ? await loadMock() : []; // TODO live fetch
     const normalized = normalizeManyHostaway(rawItems);
 
-    // --- Merge DB-approved state, if present ---
-// Fetch approvals for the normalized review ids from the DB.
+    // Merge DB approvals into normalized items
     const ids = normalized.map((r) => r.id);
-    const approvals = await prisma.review.findMany({
+    const rows = await prisma.review.findMany({
         where: { id: { in: ids } },
         select: { id: true, approved: true }
     });
-    const approvalMap = new Map(approvals.map((a) => [a.id, a.approved]));
-
-// Apply 'approved' from DB to each normalized item (default false)
+    const approvedMap = new Map(rows.map((r) => [r.id, r.approved]));
     for (const r of normalized) {
-        const a = approvalMap.get(r.id);
-        (r as any).approved = a ?? false;
+        (r as any).approved = approvedMap.get(r.id) ?? false;
     }
 
-
-    // 4) Apply filters (server-side)
-    const fromTs = parseDate(q.from ?? undefined);
-    const toTs = parseDate(q.to ?? undefined);
+    // Filters
+    const fromTs = parseDate(q.from);
+    const toTs = parseDate(q.to);
+    const needle = (q.q ?? "").trim().toLowerCase();
 
     const filtered = normalized.filter((r) => {
+        if (q.id && r.id !== q.id) return false;                     // NEW: review id exact
         if (q.listingId && r.listingId !== q.listingId) return false;
+
+        if (needle) {
+            const hay = [
+                r.id,
+                r.listingId,
+                r.listingName ?? "",
+                r.text ?? "",
+                r.author?.name ?? ""
+            ]
+                .join(" ")
+                .toLowerCase();
+            if (!hay.includes(needle)) return false;                    // NEW: free-text search
+        }
+
         if (q.type && r.type !== q.type) return false;
         if (q.status && r.status !== q.status) return false;
         if (q.channel && r.channel !== q.channel) return false;
@@ -108,12 +106,11 @@ router.get("/hostaway", async (req: Request, res: Response) => {
         return true;
     });
 
-    // 5) Paginate
+    // Pagination
     const start = q.offset;
     const end = q.offset + q.limit;
     const page = filtered.slice(start, end);
 
-    // 6) Respond
     res.json({
         meta: {
             count: filtered.length,
@@ -127,28 +124,62 @@ router.get("/hostaway", async (req: Request, res: Response) => {
 
 /**
  * PATCH /api/reviews/:id/approve
- * Request body: { approved: boolean }
- * Response: the updated review row (or 404 if not found)
+ * Body: { approved: boolean }
+ * If row is missing and USE_MOCK=true, auto-upsert from mock so PATCH never 404s for mock data.
  */
 router.patch("/:id/approve", async (req: Request, res: Response) => {
     const id = String(req.params.id);
     const approved = typeof req.body?.approved === "boolean" ? req.body.approved : null;
+
     if (approved == null) {
         return res.status(400).json({ error: "approved (boolean) is required" });
     }
 
     try {
-        const updated = await prisma.review.update({
-            where: { id },
-            data: { approved }
-        });
+        const updated = await prisma.review.update({ where: { id }, data: { approved } });
         return res.json(updated);
     } catch (e: any) {
-        // Record may not exist yet (e.g., if seed wasn't run).
+        // Record not found → for mock mode, auto-create from normalized mock
         if (e?.code === "P2025") {
-            return res.status(404).json({ error: `Review ${id} not found` });
+            const useMock = String(process.env.USE_MOCK ?? "true").toLowerCase() !== "false";
+            if (!useMock) {
+                return res.status(404).json({ error: `Review ${id} not found` });
+            }
+
+            // Try to find the review in the mock, normalize and create it
+            const rawItems = await loadMock();
+            const normalized = normalizeManyHostaway(rawItems);
+            const match = normalized.find((r) => r.id === id);
+            if (!match) {
+                return res.status(404).json({ error: `Review ${id} not found` });
+            }
+
+            // Create with the normalized fields and approved flag
+            await prisma.review.create({
+                data: {
+                    id: match.id,
+                    source: match.source,
+                    listingId: match.listingId,
+                    listingName: match.listingName ?? null,
+                    type: match.type,
+                    channel: match.channel,
+                    status: match.status ?? null,
+                    rating: match.rating,
+                    categories: match.categories ?? {},
+                    text: match.text,
+                    privateFeedback: match.privateFeedback ?? null,
+                    submittedAt: new Date(match.submittedAt),
+                    authorName: match.author?.name ?? null,
+                    authorUrl: match.author?.url ?? null,
+                    approved
+                }
+            });
+
+            const created = await prisma.review.findUnique({ where: { id } });
+            return res.json(created);
         }
-        throw e;
+
+        return res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
