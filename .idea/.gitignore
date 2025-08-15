@@ -12,3 +12,5 @@ pnpm-debug.log*
 .vscode
 .idea
 .DS_Store
+/inspectionProfiles/Project_Default.xml
+/vcs.xml
