@@ -85,6 +85,9 @@ router.get("/reviews", async (req: Request, res: Response) => {
         approved: r.approved
     }));
 
+    // lightweight caching; frontend still gets fresh on interaction
+    res.setHeader("Cache-Control", "public, max-age=60");
+
     res.json({
         meta: { count, limit: q.limit, offset: q.offset, generatedAt: new Date().toISOString() },
         reviews
