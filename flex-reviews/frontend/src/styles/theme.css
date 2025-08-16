@@ -208,3 +208,53 @@ a:hover { text-decoration: underline; }
     background: conic-gradient(from 160deg, var(--green-500), var(--green-700));
     box-shadow: inset 0 0 0 1px #fff8, 0 2px 8px rgba(0,0,0,0.08);
 }
+
+/* Responsive header */
+.shell__header {
+    flex-wrap: wrap;
+    padding: 10px var(--sp-4);
+}
+
+@media (max-width: 1200px) {
+    .shell__header {
+        flex-direction: row;      /* Always row */
+        flex-wrap: wrap;          /* Allow wrapping if needed */
+        align-items: center;      /* Vertically center */
+        justify-content: space-between;
+        padding: 8px var(--sp-2); /* Reduce padding */
+    }
+    .brand {
+        font-size: 18px;
+    }
+}
+
+/* Responsive table: stack on small screens */
+@media (max-width: 1200px) {
+    .table, .table thead, .table tbody, .table th, .table td, .table tr {
+        display: block;
+        width: 100%;
+    }
+    .table thead {
+        display: none;
+    }
+    .table tr {
+        margin-bottom: 16px;
+        background: var(--surface-2);
+        border-radius: var(--r-card);
+        box-shadow: var(--shadow-1);
+        padding: 8px;
+    }
+    .table td {
+        border: none;
+        padding: 6px 0;
+        font-size: var(--fs-14);
+        display: flex;
+        justify-content: space-between;
+    }
+    .table td:before {
+        content: attr(data-label);
+        font-weight: 600;
+        color: var(--text-2);
+        margin-right: 8px;
+    }
+}

@@ -290,20 +290,21 @@ export default function Dashboard(): JSX.Element {
                                 <tbody>
                                 {rows.map((r: Review) => (
                                     <tr key={r.id}>
-                                        <td><code>{r.id}</code></td>
-                                        <td>{r.listingName || r.listingId}</td>
-                                        <td>{r.type.replace(/_/g, " ")}</td>
-                                        <td>{r.channel}</td>
-                                        <td>{r.status ?? <Badge variant="accent">—</Badge>}</td>
-                                        <td>{r.rating ?? "—"}</td>
-                                        <td>{new Date(r.submittedAt).toLocaleDateString()}</td>
+                                        <td data-label="ID"><code>{r.id}</code></td>
+                                        <td data-label="Listing">{r.listingName || r.listingId}</td>
+                                        <td data-label="Type">{r.type.replace(/_/g, " ")}</td>
+                                        <td data-label="Channel">{r.channel}</td>
+                                        <td data-label="Status">{r.status ?? <Badge variant="accent">—</Badge>}</td>
+                                        <td data-label="Rating">{r.rating ?? "—"}</td>
+                                        <td data-label="Submitted">{new Date(r.submittedAt).toLocaleDateString()}</td>
                                         <td
+                                            data-label="Text"
                                             title={r.text ?? ""}
                                             style={{ maxWidth: 320, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
                                         >
                                             {r.text ?? "—"}
                                         </td>
-                                        <td>
+                                        <td data-label="Approved">
                                             <Switch
                                                 checked={r.approved}
                                                 onChange={(next: boolean) => approveMut.mutate({ id: r.id, approved: next })}
