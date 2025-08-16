@@ -300,7 +300,7 @@ export default function Dashboard(): JSX.Element {
                                         <td
                                             data-label="Text"
                                             title={r.text ?? ""}
-                                            style={{ maxWidth: 320, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
+                                            style={{ whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}
                                         >
                                             {r.text ?? "—"}
                                         </td>
