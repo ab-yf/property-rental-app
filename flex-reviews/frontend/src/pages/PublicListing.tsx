@@ -220,22 +220,56 @@ function ReviewCard({ review: r }: { review: Review }) {
 
 /** Simple star renderer (0–5), colored with theme primary */
 function Stars({ value }: { value: number }) {
-    const full = Math.round(value);
+    const uid = React.useId();
+    const safe = Math.max(0, Math.min(5, value));
+    const whole = Math.floor(safe);
+    const frac = safe - whole;
+    const snapUp = frac > 0.8 ? 1 : 0;
+
     return (
-        <div aria-label={`Rating ${value} out of 5`} title={`${value}/5`} style={{ display: "inline-flex", gap: 2 }}>
-            {Array.from({ length: 5 }).map((_, i) => (
-                <svg
-                    key={i}
-                    width="18"
-                    height="18"
-                    viewBox="0 0 24 24"
-                    fill={i < full ? "currentColor" : "none"}
-                    stroke="currentColor"
-                    style={{ color: "var(--green-600)" }}
-                >
-                    <path d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z" />
-                </svg>
-            ))}
+        <div
+            aria-label={`Rating ${safe} out of 5`}
+            title={`${safe}/5`}
+            style={{ display: "inline-flex", gap: 2, alignItems: "center" }}
+        >
+            {Array.from({ length: 5 }).map((_, i) => {
+                let fill = 0;
+                if (i < whole) fill = 1;                         // full stars before the fractional index
+                else if (i === whole) fill = snapUp ? 1 : frac;  // snap if fraction \> 0.8, else partial
+                // else remains 0
+
+                const clipId = `${uid}-star-clip-${i}`;
+
+                return (
+                    <svg
+                        key={i}
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        style={{ display: "block", color: "var(--green-600)" }}
+                        aria-hidden="true"
+                    >
+                        <defs>
+                            <clipPath id={clipId}>
+                                <rect x="0" y="0" width={24 * fill} height="24" />
+                            </clipPath>
+                        </defs>
+                        {/* Empty star background */}
+                        <path
+                            d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"
+                            fill="#e0e0e0"
+                        />
+                        {/* Filled portion */}
+                        {fill > 0 && (
+                            <path
+                                d="M12 17.3l6.18 3.7-1.64-7.03L22 9.24l-7.19-.62L12 2 9.19 8.62 2 9.24l5.46 4.73L5.82 21z"
+                                fill="currentColor"
+                                clipPath={`url(#${clipId})`}
+                            />
+                        )}
+                    </svg>
+                );
+            })}
         </div>
     );
 }
