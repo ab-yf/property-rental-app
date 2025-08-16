@@ -1,5 +1,5 @@
 import React, {JSX, useEffect, useMemo, useState} from "react";
-import { useQuery, keepPreviousData } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router-dom";
 
 import AppShell from "../components/ui/AppShell";
@@ -36,7 +36,11 @@ export default function PublicListing(): JSX.Element {
         useQuery<ReviewsResponse, Error, ReviewsResponse, readonly [string, string, SortOpt, number, number]>({
             queryKey: ["public-reviews", listingId, sort, limit, offset] as const,
             queryFn: () => fetchPublicReviews({ listingId: listingId || undefined, sort, limit, offset }),
-            placeholderData: keepPreviousData
+            // Keep it simple & robust: no keepPreviousData, so filters don't show stale rows.
+            refetchOnWindowFocus: false,
+            refetchOnReconnect: false,
+            refetchOnMount: "always",
+            staleTime: 0,
         });
 
     const rows: Review[] = (data?.reviews ?? []) as Review[];
@@ -50,11 +54,8 @@ export default function PublicListing(): JSX.Element {
         return { avg, count: data?.meta.count ?? 0 };
     }, [data, rows]);
 
-    // Derive a display title (prefer listingName from first card)
-    const title = useMemo(() => {
-        const name = rows.find((r) => r.listingName)?.listingName;
-        return name || (listingId ? `Listing ${listingId}` : "Guest Reviews");
-    }, [rows, listingId]);
+    // Title: avoid using previous rows; be explicit
+    const title = listingId ? `Listing ${listingId}` : "Guest Reviews";
 
     return (
         <AppShell>
@@ -80,9 +81,18 @@ export default function PublicListing(): JSX.Element {
                 <Card
                     title="Find a listing"
                     actions={
-                        <Button onClick={() => { setOffset(0); refetch(); }}>
-                            Refresh
-                        </Button>
+                        <div style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+                            <Button onClick={() => { setOffset(0); refetch(); }}>
+                                Refresh
+                            </Button>
+                            <Button
+                                variant="ghost"
+                                onClick={() => { setListingId(""); setSort("newest"); setOffset(0); }}
+                                title="Clear all filters"
+                            >
+                                Clear
+                            </Button>
+                        </div>
                     }
                 >
                     <div className="row" style={{ flexWrap: "wrap", gap: 12 }}>
@@ -108,13 +118,6 @@ export default function PublicListing(): JSX.Element {
                             <option value="rating_desc">Rating: High → Low</option>
                             <option value="rating_asc">Rating: Low → High</option>
                         </Select>
-                        <Button
-                            variant="ghost"
-                            onClick={() => { setListingId(""); setSort("newest"); setOffset(0); }}
-                            title="Clear all filters"
-                        >
-                            Clear
-                        </Button>
                     </div>
                 </Card>
 

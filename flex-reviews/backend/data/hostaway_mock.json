@@ -29,12 +29,176 @@
       "rating": 4.5,
       "reviewCategory": [
         { "category": "cleanliness", "rating": 9 },
-        { "category": "check_in", "rating": 8 }
+        { "category": "check_in", "rating": 8 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 }
       ],
       "publicReview": "Great location, check-in was smooth.",
       "privateFeedback": "WiFi password note could be clearer.",
       "submittedAt": "2021-05-02 10:15:00",
       "guestName": "Alex J"
+    },
+    {
+      "id": 9002,
+      "listingMapId": 70987,
+      "listingName": "Sunny Beachside Villa",
+      "type": "guest-to-host",
+      "channelId": 1,
+      "status": "published",
+      "rating": 5,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "check_in", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 10 }
+      ],
+      "publicReview": "Absolutely stunning place! The views were incredible and the host was very responsive. Highly recommend.",
+      "privateFeedback": "Everything was perfect, thank you for the wonderful stay!",
+      "submittedAt": "2022-07-15 14:30:10",
+      "guestName": "Maria Garcia",
+      "reservationId": 601
+    },
+    {
+      "id": 9003,
+      "listingMapId": 70987,
+      "listingName": "Sunny Beachside Villa",
+      "type": "host-to-guest",
+      "channelId": 1,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Maria was a fantastic guest! Left the villa spotless. We'd be delighted to have her back.",
+      "privateFeedback": null,
+      "submittedAt": "2022-07-16 11:05:22",
+      "guestName": "Maria Garcia",
+      "reservationId": 601
+    },
+    {
+      "id": 9004,
+      "listingMapId": 70988,
+      "listingName": "Cozy Downtown Apartment",
+      "type": "guest-to-host",
+      "channelId": 3,
+      "status": "published",
+      "rating": 3.8,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 6 },
+        { "category": "check_in", "rating": 9 },
+        { "category": "accuracy", "rating": 8 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 7 }
+      ],
+      "publicReview": "A decent place for a short stay. Location is great, but the apartment could have been cleaner.",
+      "privateFeedback": "The shower drain was a bit slow and there were some dust bunnies under the bed.",
+      "submittedAt": "2022-09-01 09:00:51",
+      "guestName": "John Smith"
+    },
+    {
+      "id": 9005,
+      "listingMapId": 70989,
+      "listingName": "Rustic Mountain Cabin",
+      "type": "guest-to-host",
+      "channelId": 2,
+      "status": "awaiting",
+      "rating": 4.8,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "check_in", "rating": 10 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "publicReview": "The cabin was exactly as described. A perfect getaway from the city. So peaceful and quiet.",
+      "privateFeedback": null,
+      "submittedAt": "2023-01-20 18:55:00",
+      "guestName": "Priya Patel",
+      "reservationId": 603
+    },
+    {
+      "id": 9006,
+      "listingMapId": 70989,
+      "listingName": "Rustic Mountain Cabin",
+      "type": "host-to-guest",
+      "channelId": 2,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Priya and her partner were wonderful guests. Very respectful of the space and nature around it. Welcome back anytime!",
+      "privateFeedback": "Thanks for the lovely note you left!",
+      "submittedAt": "2023-01-21 12:00:00",
+      "guestName": "Priya Patel",
+      "reservationId": 603
+    },
+    {
+      "id": 9007,
+      "listingMapId": 70990,
+      "listingName": "Luxury Penthouse with View",
+      "type": "guest-to-host",
+      "channelId": 1,
+      "status": "published",
+      "rating": 4.2,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "check_in", "rating": 7 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 8 }
+      ],
+      "publicReview": "Incredible views and a beautiful apartment. The check-in process was a bit confusing, but we figured it out.",
+      "privateFeedback": "The instructions for the smart lock could be clearer. We had to call for help.",
+      "submittedAt": "2023-02-14 11:20:30",
+      "guestName": "Wei Chen"
+    },
+    {
+      "id": 9008,
+      "listingMapId": 70991,
+      "listingName": "Charming Countryside Cottage",
+      "type": "host-to-guest",
+      "channelId": 4,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 5 },
+        { "category": "communication", "rating": 7 },
+        { "category": "respect_house_rules", "rating": 4 }
+      ],
+      "publicReview": "Unfortunately, the guests did not respect the no-party rule and left the cottage in a significant mess.",
+      "privateFeedback": "Cigarette butts were found on the patio, and there was a broken glass in the kitchen. Very disappointing.",
+      "submittedAt": "2023-03-10 16:45:14",
+      "guestName": "David Miller",
+      "reservationId": 605
+    },
+    {
+      "id": 9009,
+      "listingMapId": 70992,
+      "listingName": "Spacious Family Home",
+      "type": "guest-to-host",
+      "channelId": 2,
+      "status": "published",
+      "rating": 4.9,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "check_in", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 10 }
+      ],
+      "publicReview": "Perfect for our family vacation! The house was spacious, clean, and had a great backyard for the kids. The host was very accommodating.",
+      "privateFeedback": "A high chair would be a great addition for families with toddlers!",
+      "submittedAt": "2023-04-05 20:10:00",
+      "guestName": "Sophia Rossi",
+      "reservationId": 606
     }
   ]
 }

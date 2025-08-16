@@ -76,6 +76,11 @@ export default function Dashboard(): JSX.Element {
         },
         onSettled: () => {
             queryClient.invalidateQueries({ queryKey: queryKeyFrom(filters) });
+        },
+        onSuccess: () => {
+            // 🔽 NEW: also nudge the public queries
+            queryClient.invalidateQueries({ queryKey: ["public-reviews"], exact: false });
+            queryClient.invalidateQueries({ queryKey: ["public-reviews-grouped"], exact: false });
         }
     });
 
