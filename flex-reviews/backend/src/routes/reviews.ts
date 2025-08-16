@@ -43,6 +43,9 @@ async function loadMock(): Promise<unknown[]> {
 // -------------- Route --------------
 const router = Router();
 
+// protect all manager review routes
+router.use(requireAdmin);
+
 /**
  * GET /api/reviews/hostaway
  * Query supports:

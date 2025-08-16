@@ -1,5 +1,6 @@
 // backend/src/index.ts
 import "dotenv/config";
+import { validateEnv} from "./config/env";
 import app from "./app";
 import publicRouter from "./routes/public";
 import authRouter from "./routes/auth";
