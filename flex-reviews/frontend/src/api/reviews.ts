@@ -1,41 +1,30 @@
+const API = import.meta.env.VITE_API_URL || "";
 
-import { z } from "zod";
-import { apiGet, apiPatch } from "./client";
-import type { Review, ReviewsResponse, ReviewQuery } from "../types/review";
+export async function fetchReviews(q: URLSearchParams | Record<string, unknown>) {
+    const url = new URL("/api/reviews/hostaway", API);
+    if (q && !(q instanceof URLSearchParams)) {
+        Object.entries(q).forEach(([k, v]) => {
+            if (v !== undefined && v !== null && v !== "") url.searchParams.set(k, String(v));
+        });
+    } else if (q instanceof URLSearchParams) {
+        q.forEach((v, k) => url.searchParams.set(k, v));
+    }
 
-// Optional: guard the response at runtime (helps catch backend drift during dev)
-const ReviewZ = z.object({
-    id: z.string(),
-    source: z.enum(["hostaway", "google"]),
-    listingId: z.string(),
-    listingName: z.string().optional(),
-    type: z.enum(["guest_to_host", "host_to_guest"]),
-    channel: z.enum(["airbnb", "booking", "vrbo", "direct", "unknown"]),
-    status: z.enum(["awaiting", "published", "pending", "scheduled", "expired"]).optional(),
-    rating: z.number().nullable(),
-    categories: z.record(z.string(), z.number()),
-    text: z.string().nullable(),
-    privateFeedback: z.string().nullable().optional(),
-    submittedAt: z.string(),
-    author: z.object({ name: z.string().optional(), url: z.string().url().optional() }).nullable().optional(),
-    approved: z.boolean()
-});
-const ReviewsResponseZ = z.object({
-    meta: z.object({
-        count: z.number(),
-        generatedAt: z.string(),
-        limit: z.number(),
-        offset: z.number()
-    }),
-    reviews: z.array(ReviewZ)
-});
-
-export async function fetchReviews(q: ReviewQuery): Promise<ReviewsResponse> {
-    const res = await apiGet<ReviewsResponse>("/reviews/hostaway", q);
-    // Validate in dev; skip for perf in prod if you like
-    return ReviewsResponseZ.parse(res);
+    const res = await fetch(url, {
+        credentials: "include",
+        headers: { "X-Requested-With": "fetch" }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
 }
 
-export async function approveReview(id: string, approved: boolean): Promise<Review> {
-    return apiPatch<Review>(`/reviews/${encodeURIComponent(id)}/approve`, { approved });
+export async function approveReview(id: string, approved: boolean) {
+    const res = await fetch(`${API}/api/reviews/${encodeURIComponent(id)}/approve`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json", "X-Requested-With": "fetch" },
+        body: JSON.stringify({ approved })
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
 }

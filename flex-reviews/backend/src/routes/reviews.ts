@@ -4,6 +4,7 @@ import fs from "fs/promises";
 import path from "path";
 import { normalizeManyHostaway } from "../services/hostaway/normalize";
 import { prisma } from "../db/prisma";
+import { requireAdmin} from "../middleware/requireAdmin";
 
 // -------------- Query schema & types --------------
 // New: id (exact review id) and q (free-text search)
@@ -50,7 +51,7 @@ const router = Router();
  *  - type, status, channel, minRating, maxRating, from, to
  *  - limit, offset
  */
-router.get("/hostaway", async (req: Request, res: Response) => {
+router.get("/hostaway", requireAdmin, async (req: Request, res: Response) => {
     const q = QuerySchema.parse(req.query);
 
     const useMock = String(process.env.USE_MOCK ?? "true").toLowerCase() !== "false";
@@ -127,7 +128,7 @@ router.get("/hostaway", async (req: Request, res: Response) => {
  * Body: { approved: boolean }
  * If row is missing and USE_MOCK=true, auto-upsert from mock so PATCH never 404s for mock data.
  */
-router.patch("/:id/approve", async (req: Request, res: Response) => {
+router.patch("/:id/approve", requireAdmin, async (req: Request, res: Response) => {
     const id = String(req.params.id);
     const approved = typeof req.body?.approved === "boolean" ? req.body.approved : null;
 
