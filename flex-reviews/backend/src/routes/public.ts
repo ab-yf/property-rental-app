@@ -48,14 +48,22 @@ router.get("/reviews", async (req, res, next) => {
                 break;
         }
 
+        const publicSelect = {
+            id: true, source: true, listingId: true, listingName: true,
+            type: true, channel: true, status: true, rating: true,
+            categories: true, text: true, submittedAt: true, authorName: true,
+            approved: true, createdAt: true, updatedAt: true
+        };
+
         const [reviews, count] = await Promise.all([
             prisma.review.findMany({
                 where,
-                orderBy: [primary, { id: "asc" }], // stable ordering
+                orderBy: [primary, { id: "asc" }],
                 skip: q.offset,
                 take: q.limit,
+                select: publicSelect  // only public, safe fields
             }),
-            prisma.review.count({ where }),
+            prisma.review.count({ where })
         ]);
 
         res.json({

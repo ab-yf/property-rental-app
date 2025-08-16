@@ -13,13 +13,13 @@ datasource db {
  * You can safely add indexes (e.g., on listingId, submittedAt) later.
  */
 model Review {
-  id              String   @id            // "hostaway:7453"
-  source          String   // 'hostaway' | 'google'
+  id              String   @id // "hostaway:7453"
+  source          String // 'hostaway' | 'google'
   listingId       String
   listingName     String?
-  type            String   // 'guest_to_host' | 'host_to_guest'
-  channel         String   // 'airbnb' | 'booking' | 'vrbo' | 'direct' | 'unknown'
-  status          String?  // optional lifecycle
+  type            String // 'guest_to_host' | 'host_to_guest'
+  channel         String // 'airbnb' | 'booking' | 'vrbo' | 'direct' | 'unknown'
+  status          String? // optional lifecycle
   rating          Float?
   categories      Json
   text            String?
@@ -29,6 +29,10 @@ model Review {
   authorUrl       String?
   approved        Boolean  @default(false)
 
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([listingId])
+  @@index([submittedAt])
+  @@index([listingId, submittedAt])
 }
