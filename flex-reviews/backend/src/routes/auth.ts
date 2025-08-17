@@ -11,7 +11,7 @@ const ADMIN_PASS_HASH = process.env.ADMIN_PASS_HASH || "";
 
 const cookieOpts = {
     httpOnly: true as const,
-    sameSite: "lax" as const,
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     secure: process.env.NODE_ENV === "production",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     path: "/"
