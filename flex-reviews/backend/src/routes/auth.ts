@@ -1,20 +1,21 @@
-import { Router } from "express";
+import {CookieOptions, Router} from "express";
 import bcrypt from "bcryptjs";
 import { z } from "zod";
 import { signAdminToken, verifyAdminToken } from "../utils/jwt";
 
 const r = Router();
+const IS_PROD = process.env.NODE_ENV === "production";
 const COOKIE_NAME = process.env.COOKIE_NAME || "flex_admin";
 const SECRET = process.env.SESSION_SECRET || "";
 const ADMIN_USER = process.env.ADMIN_USER || "";
 const ADMIN_PASS_HASH = process.env.ADMIN_PASS_HASH || "";
 
-const cookieOpts = {
-    httpOnly: true as const,
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-    secure: process.env.NODE_ENV === "production",
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    path: "/"
+const cookieOpts: CookieOptions = {
+    httpOnly: true,
+    sameSite: IS_PROD ? "none" : "lax", // <- now inferred as "none" | "lax"
+    secure: IS_PROD,                    // required when sameSite = "none"
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    path: "/",
 };
 
 r.post("/login", async (req, res) => {
