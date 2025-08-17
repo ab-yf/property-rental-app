@@ -199,6 +199,406 @@
       "submittedAt": "2023-04-05 20:10:00",
       "guestName": "Sophia Rossi",
       "reservationId": 606
+    },
+    {
+      "id": 9010,
+      "listingMapId": 70993,
+      "listingName": "Urban Studio Apartment",
+      "type": "guest-to-host",
+      "channelId": 1,
+      "status": "published",
+      "rating": 4.7,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "check_in", "rating": 10 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 8 }
+      ],
+      "publicReview": "Great location and very clean. Perfect for a weekend getaway.",
+      "privateFeedback": "The bed could be a bit more comfortable.",
+      "submittedAt": "2023-05-01 12:00:00",
+      "guestName": "Emily Johnson",
+      "reservationId": 607
+    },
+    {
+      "id": 9011,
+      "listingMapId": 70994,
+      "listingName": "Seaside Bungalow",
+      "type": "host-to-guest",
+      "channelId": 2,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Emily was a wonderful guest. Left the place spotless and was very communicative.",
+      "privateFeedback": null,
+      "submittedAt": "2023-05-02 10:00:00",
+      "guestName": "Emily Johnson",
+      "reservationId": 607
+    },
+    {
+      "id": 9012,
+      "listingMapId": 70995,
+      "listingName": "Modern City Loft",
+      "type": "guest-to-host",
+      "channelId": 3,
+      "status": "published",
+      "rating": 4.3,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 8 },
+        { "category": "check_in", "rating": 9 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 7 }
+      ],
+      "publicReview": "Nice place, but could use a bit more attention to detail in cleaning.",
+      "privateFeedback": "There was some dust on the shelves and the bathroom could be cleaner.",
+      "submittedAt": "2023-05-10 15:30:00",
+      "guestName": "Michael Brown",
+      "reservationId": 608
+    },
+    {
+      "id": 9013,
+      "listingMapId": 70996,
+      "listingName": "Cozy Cabin in the Woods",
+      "type": "host-to-guest",
+      "channelId": 4,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 9 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Michael and his family were great guests. Very respectful and left the cabin in great condition.",
+      "privateFeedback": null,
+      "submittedAt": "2023-05-11 09:00:00",
+      "guestName": "Michael Brown",
+      "reservationId": 608
+    },
+    {
+      "id": 9014,
+      "listingMapId": 70997,
+      "listingName": "Luxury Downtown Condo",
+      "type": "guest-to-host",
+      "channelId": 1,
+      "status": "published",
+      "rating": 4.9,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "check_in", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 9 }
+      ],
+      "publicReview": "Amazing condo with great amenities. Would definitely stay again.",
+      "privateFeedback": "The parking instructions could be a bit clearer.",
+      "submittedAt": "2023-05-15 18:00:00",
+      "guestName": "Sarah Lee",
+      "reservationId": 609
+    },
+    {
+      "id": 9015,
+      "listingMapId": 70998,
+      "listingName": "Charming Lakehouse",
+      "type": "host-to-guest",
+      "channelId": 2,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Sarah was a fantastic guest. Left the lakehouse in perfect condition.",
+      "privateFeedback": null,
+      "submittedAt": "2023-05-16 14:00:00",
+      "guestName": "Sarah Lee",
+      "reservationId": 609
+    },
+    {
+      "id": 9016,
+      "listingMapId": 70999,
+      "listingName": "Beachfront Villa",
+      "type": "guest-to-host",
+      "channelId": 3,
+      "status": "published",
+      "rating": 4.5,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "check_in", "rating": 8 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 8 }
+      ],
+      "publicReview": "Beautiful villa with stunning views. Check-in process could be smoother.",
+      "privateFeedback": "The key was hard to find initially. Clearer instructions would help.",
+      "submittedAt": "2023-05-20 12:00:00",
+      "guestName": "David Kim",
+      "reservationId": 610
+    },
+    {
+      "id": 9017,
+      "listingMapId": 71000,
+      "listingName": "Rustic Farmhouse",
+      "type": "host-to-guest",
+      "channelId": 4,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "David and his family were wonderful guests. Very respectful and left the farmhouse spotless.",
+      "privateFeedback": null,
+      "submittedAt": "2023-05-21 10:00:00",
+      "guestName": "David Kim",
+      "reservationId": 610
+    },
+    {
+      "id": 9018,
+      "listingMapId": 71001,
+      "listingName": "Elegant City Apartment",
+      "type": "guest-to-host",
+      "channelId": 1,
+      "status": "published",
+      "rating": 4.6,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "check_in", "rating": 9 },
+        { "category": "accuracy", "rating": 8 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 8 }
+      ],
+      "publicReview": "Great apartment in a central location. Very clean and comfortable.",
+      "privateFeedback": "The kitchen could use more utensils.",
+      "submittedAt": "2023-05-25 14:00:00",
+      "guestName": "Anna White",
+      "reservationId": 611
+    },
+    {
+      "id": 9019,
+      "listingMapId": 71002,
+      "listingName": "Chic Studio in Downtown",
+      "type": "host-to-guest",
+      "channelId": 2,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Anna was a delightful guest. Left the studio in perfect condition.",
+      "privateFeedback": null,
+      "submittedAt": "2023-05-26 10:00:00",
+      "guestName": "Anna White",
+      "reservationId": 611
+    },
+    {
+      "id": 9020,
+      "listingMapId": 71003,
+      "listingName": "Secluded Forest Retreat",
+      "type": "guest-to-host",
+      "channelId": 3,
+      "status": "published",
+      "rating": 4.8,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "check_in", "rating": 9 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "publicReview": "A peaceful retreat surrounded by nature. Highly recommend!",
+      "privateFeedback": "The directions to the property could be clearer.",
+      "submittedAt": "2023-05-30 12:00:00",
+      "guestName": "James Carter",
+      "reservationId": 612
+    },
+    {
+      "id": 9021,
+      "listingMapId": 71004,
+      "listingName": "Modern Suburban Home",
+      "type": "host-to-guest",
+      "channelId": 4,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "James and his family were excellent guests. Very respectful and tidy.",
+      "privateFeedback": null,
+      "submittedAt": "2023-05-31 09:00:00",
+      "guestName": "James Carter",
+      "reservationId": 612
+    },
+    {
+      "id": 9022,
+      "listingMapId": 71005,
+      "listingName": "Cozy Urban Loft",
+      "type": "guest-to-host",
+      "channelId": 1,
+      "status": "published",
+      "rating": 4.4,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 8 },
+        { "category": "check_in", "rating": 9 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 8 }
+      ],
+      "publicReview": "Nice loft in a great location. Could be a bit cleaner.",
+      "privateFeedback": "There was some dust on the shelves.",
+      "submittedAt": "2023-06-01 15:30:00",
+      "guestName": "Laura Green",
+      "reservationId": 613
+    },
+    {
+      "id": 9023,
+      "listingMapId": 71006,
+      "listingName": "Luxury Beach House",
+      "type": "host-to-guest",
+      "channelId": 2,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Laura was a wonderful guest. Left the house spotless.",
+      "privateFeedback": null,
+      "submittedAt": "2023-06-02 10:00:00",
+      "guestName": "Laura Green",
+      "reservationId": 613
+    },
+    {
+      "id": 9024,
+      "listingMapId": 71007,
+      "listingName": "Charming City Cottage",
+      "type": "guest-to-host",
+      "channelId": 3,
+      "status": "published",
+      "rating": 4.7,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "check_in", "rating": 10 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 9 }
+      ],
+      "publicReview": "Lovely cottage with a great host. Would stay again.",
+      "privateFeedback": "The WiFi signal could be stronger.",
+      "submittedAt": "2023-06-05 12:00:00",
+      "guestName": "Chris Brown",
+      "reservationId": 614
+    },
+    {
+      "id": 9025,
+      "listingMapId": 71008,
+      "listingName": "Rustic Lake Cabin",
+      "type": "host-to-guest",
+      "channelId": 4,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Chris was a fantastic guest. Left the cabin in great condition.",
+      "privateFeedback": null,
+      "submittedAt": "2023-06-06 09:00:00",
+      "guestName": "Chris Brown",
+      "reservationId": 614
+    },
+    {
+      "id": 9026,
+      "listingMapId": 71009,
+      "listingName": "Modern Downtown Condo",
+      "type": "guest-to-host",
+      "channelId": 1,
+      "status": "published",
+      "rating": 4.9,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "check_in", "rating": 10 },
+        { "category": "accuracy", "rating": 10 },
+        { "category": "location", "rating": 9 },
+        { "category": "value", "rating": 9 }
+      ],
+      "publicReview": "Amazing condo with great amenities. Highly recommend.",
+      "privateFeedback": "The parking instructions could be clearer.",
+      "submittedAt": "2023-06-10 18:00:00",
+      "guestName": "Sophia Lee",
+      "reservationId": 615
+    },
+    {
+      "id": 9027,
+      "listingMapId": 71010,
+      "listingName": "Seaside Cottage",
+      "type": "host-to-guest",
+      "channelId": 2,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Sophia was a wonderful guest. Left the cottage spotless.",
+      "privateFeedback": null,
+      "submittedAt": "2023-06-11 14:00:00",
+      "guestName": "Sophia Lee",
+      "reservationId": 615
+    },
+    {
+      "id": 9028,
+      "listingMapId": 71011,
+      "listingName": "Urban Studio Apartment",
+      "type": "guest-to-host",
+      "channelId": 3,
+      "status": "published",
+      "rating": 4.7,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 9 },
+        { "category": "check_in", "rating": 10 },
+        { "category": "accuracy", "rating": 9 },
+        { "category": "location", "rating": 10 },
+        { "category": "value", "rating": 8 }
+      ],
+      "publicReview": "Great location and very clean. Perfect for a weekend getaway.",
+      "privateFeedback": "The bed could be a bit more comfortable.",
+      "submittedAt": "2023-06-15 12:00:00",
+      "guestName": "Emily Johnson",
+      "reservationId": 616
+    },
+    {
+      "id": 9029,
+      "listingMapId": 71012,
+      "listingName": "Seaside Bungalow",
+      "type": "host-to-guest",
+      "channelId": 4,
+      "status": "published",
+      "rating": null,
+      "reviewCategory": [
+        { "category": "cleanliness", "rating": 10 },
+        { "category": "communication", "rating": 10 },
+        { "category": "respect_house_rules", "rating": 10 }
+      ],
+      "publicReview": "Emily was a wonderful guest. Left the place spotless and was very communicative.",
+      "privateFeedback": null,
+      "submittedAt": "2023-06-16 10:00:00",
+      "guestName": "Emily Johnson",
+      "reservationId": 616
     }
   ]
 }
