@@ -1,17 +1,17 @@
-import { apiGet } from "./client";
+// frontend/src/api/public.ts
 import type { ReviewsResponse } from "../types/review";
+const API = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
 
-/** Query params accepted by the backend public endpoint */
-export type PublicQuery = {
-    listingId?: string;
-    sort?: "newest" | "oldest" | "rating_desc" | "rating_asc";
-    limit?: number;
-    offset?: number;
-};
-
-/** Fetch only manager-approved reviews (DB-only) */
-export function fetchPublicReviews(q: PublicQuery) {
-    // Assumes your apiGet prefixes '/api' internally (as in earlier steps).
-    // If not, change to apiGet<ReviewsResponse>("/api/public/reviews", q).
-    return apiGet<ReviewsResponse>("/public/reviews", q);
+export async function fetchPublicReviews(q: {
+    listingId?: string; sort: string; limit: number; offset: number;
+}): Promise<ReviewsResponse> {
+    const params = new URLSearchParams({
+        ...(q.listingId ? { listingId: q.listingId } : {}),
+        sort: q.sort,
+        limit: String(q.limit),
+        offset: String(q.offset),
+    });
+    const res = await fetch(`${API}/api/public/reviews?${params}`, { credentials: "include" });
+    if (!res.ok) throw new Error(`Public reviews ${res.status}: ${await res.text()}`);
+    return res.json();
 }

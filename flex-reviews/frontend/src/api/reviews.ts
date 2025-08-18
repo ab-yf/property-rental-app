@@ -1,5 +1,5 @@
 // frontend/src/api/reviews.ts
-const API = import.meta.env.VITE_API_URL;
+const API = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
 
 export async function fetchReviews(q: URLSearchParams | Record<string, unknown>) {
     const url = new URL(`${API}/api/reviews/hostaway`);

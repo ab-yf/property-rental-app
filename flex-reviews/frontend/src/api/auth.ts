@@ -1,4 +1,4 @@
-const API = import.meta.env.VITE_API_URL || "";
+const API = (import.meta.env.VITE_API_URL || "").replace(/\/+$/, "");
 
 export async function me() {
     const res = await fetch(`${API}/api/auth/me`, { credentials: "include" });
