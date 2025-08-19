@@ -84,7 +84,7 @@ node -e "console.log(require('crypto').randomBytes(48).toString('hex'))"   # SES
 node -e "require('bcryptjs').hash('demo1234',10).then(console.log)"       # ADMIN_PASS_HASH
 
 # 6) Init DB (SQLite) & generate client
-npm run prisma:migrate -w backend
+npm run db:migrate -w backend
 
 # 7) Run dev servers (both, with CORS + cookies configured)
 npm run dev
@@ -154,9 +154,9 @@ npm run dev -w frontend
 npm run dev
 
 # Prisma (backend)
-npm run prisma:studio   -w backend   # visual DB editor
-npm run prisma:generate -w backend   # regenerate client
-npm run prisma:migrate  -w backend   # apply migrations
+npm run db:studio   -w backend   # visual DB editor
+npm run db:generate -w backend   # regenerate client
+npm run db:migrate  -w backend   # apply migrations
 
 # Tests (backend)
 npm test -w backend
